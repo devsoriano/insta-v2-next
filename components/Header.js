@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { SearchIcon, PlusCircleIcon } from "@heroicons/react/outline";
 import { HomeIcon } from "@heroicons/react/solid";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const LOGO_INSTA_LG =
   "https://www.jennexplores.com/wp-content/uploads/2015/09/Instagram_logo_black.png";
@@ -8,6 +9,8 @@ const LOGO_INSTA_SM =
   "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png";
 
 export default function Header() {
+  const { data: session } = useSession();
+  console.log(session);
   return (
     <div className="shadow-sm border-b sticky top-0 bg-white z-30">
       <div className="flex items-center justify-between max-w-6xl mx-4 xl:mx-auto">
@@ -34,12 +37,19 @@ export default function Header() {
         {/** Right */}
         <div className="flex space-x-4 items-center">
           <HomeIcon className="hidden md:inline-flex h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out" />
-          <PlusCircleIcon className="h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out" />
-          <img
-            src="https://media.licdn.com/dms/image/D5603AQH0nCUmbkvglw/profile-displayphoto-shrink_400_400/0/1674767572195?e=1680739200&v=beta&t=DInTnPEDIGo1NUF-ri_Q08gWXgz8fRfCrHPSJBByO_Y"
-            alt="user-img"
-            className="h-10 rounded-full cursor-pointer"
-          />
+          {session ? (
+            <>
+              <PlusCircleIcon className="h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out" />
+              <img
+                onClick={signOut}
+                src={session.user.image}
+                alt="user-img"
+                className="h-10 rounded-full cursor-pointer"
+              />
+            </>
+          ) : (
+            <button onClick={signIn}>Sign in</button>
+          )}
         </div>
       </div>
     </div>
