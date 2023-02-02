@@ -2,7 +2,6 @@ import { getProviders, signIn } from "next-auth/react";
 import Header from "../../components/Header";
 
 export default function signn({ providers }) {
-  console.log("providers---", providers);
   return (
     <>
       <Header />
