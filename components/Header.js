@@ -3,6 +3,7 @@ import { SearchIcon, PlusCircleIcon } from "@heroicons/react/outline";
 import { HomeIcon } from "@heroicons/react/solid";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRecoilState } from "recoil";
+import { useRouter } from "next/router";
 import { modalState } from "../atom/modalAtom";
 
 const LOGO_INSTA_LG =
@@ -13,16 +14,27 @@ const LOGO_INSTA_SM =
 export default function Header() {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useRecoilState(modalState);
+  const router = useRouter();
 
   return (
     <div className="shadow-sm border-b sticky top-0 bg-white z-30">
       <div className="flex items-center justify-between max-w-6xl mx-4 xl:mx-auto">
         {/** Left */}
         <div className="cursor-pointer h-24 w-24 relative hidden lg:inline-grid">
-          <Image src={LOGO_INSTA_LG} layout="fill" className="object-contain" />
+          <Image
+            src={LOGO_INSTA_LG}
+            layout="fill"
+            className="object-contain"
+            onClick={() => router.push("/")}
+          />
         </div>
         <div className="cursor-pointer h-24 w-10 relative lg:hidden">
-          <Image src={LOGO_INSTA_SM} layout="fill" className="object-contain" />
+          <Image
+            src={LOGO_INSTA_SM}
+            layout="fill"
+            className="object-contain"
+            onClick={() => router.push("/")}
+          />
         </div>
 
         {/** Middle */}
@@ -39,7 +51,10 @@ export default function Header() {
 
         {/** Right */}
         <div className="flex space-x-4 items-center">
-          <HomeIcon className="hidden md:inline-flex h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out" />
+          <HomeIcon
+            onClick={() => router.push("/")}
+            className="hidden md:inline-flex h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out"
+          />
           {session ? (
             <>
               <PlusCircleIcon

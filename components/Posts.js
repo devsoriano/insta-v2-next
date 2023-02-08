@@ -14,18 +14,18 @@ export default function Posts() {
       }
     );
     return unsubscribe;
-  }, []);
+  }, [db]);
 
   return (
     <div>
       {posts.map((post) => (
         <Post
-          key={post?.id}
-          username={post?.data().username}
-          userImg={post?.data().profileImg}
-          img={post?.data().image}
-          caption={post?.data().caption}
-          id={post?.id}
+          key={post.id}
+          username={post.data().username}
+          userImg={post.data().profileImg}
+          img={post.data().image}
+          caption={post.data().caption}
+          id={post.id}
         />
       ))}
     </div>
