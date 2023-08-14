@@ -30,7 +30,7 @@ export default function Post({ id, username, userImg, img, caption }) {
   const [hasLiked, setHasLiked] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(
+    onSnapshot(
       query(
         collection(db, "posts", id, "comments"),
         orderBy("timestamp", "desc")
@@ -40,9 +40,8 @@ export default function Post({ id, username, userImg, img, caption }) {
   }, [db, id]);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      query(collection(db, "posts", id, "likes")),
-      (snapshot) => setLikes(snapshot.docs)
+    onSnapshot(query(collection(db, "posts", id, "likes")), (snapshot) =>
+      setLikes(snapshot.docs)
     );
   }, [db]);
 
@@ -107,6 +106,9 @@ export default function Post({ id, username, userImg, img, caption }) {
       )}
 
       <p className="p-5 truncate">
+        {likes.length > 0 && (
+          <p className="font-bold mb-1">{likes.length} likes</p>
+        )}
         <span className="font-bold">{username}</span>
         {caption}
       </p>
